@@ -1,9 +1,20 @@
 function nsConvert(num, baseFrom, baseTo)
 {
-	console.log('lul');
+	if (baseFrom === baseTo) return num;
+	return fromDecimal(toDecimal(num, baseFrom), baseTo).toUpperCase();
 }
 
+function toDecimal(num, baseFrom)
+{
+	return parseInt(num, baseFrom);
+}
 
+function fromDecimal(num, baseTo)
+{
+	return num.toString(baseTo);
+}
+
+console.log(nsConvert("31", 10, 16));
 
 console.assert(nsConvert("23", 10, 2) === "10111", "Check 1");
 console.assert(nsConvert("31", 10, 16) === "1F", "Check 2");
