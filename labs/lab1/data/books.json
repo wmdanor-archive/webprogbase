@@ -1,0 +1,13 @@
+{
+    "items":
+    [
+        {
+            "id": 1,
+            "title": "book 1",
+            "original_language": "lul",
+            "publishment_year": 1998,
+            "pages": 220, 
+            "added": "2020-09-18T19:36:55+00:00"
+        }
+    ]
+}
