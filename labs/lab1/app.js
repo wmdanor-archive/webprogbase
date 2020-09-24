@@ -9,7 +9,7 @@ const Book = require('./models/book');
 let users = new UserRepository('./data/users');
 let books = new BookRepository('./data/books');
 
-console.log('app started')
+console.log('app started')      // add&fix try catches
 
 while(1) {
     const command = readlineSync.question('Enter command: ');
@@ -166,7 +166,7 @@ function userInput()
         return;
     }
     const registered_at = readlineSync.question('Enter registration date (ISO 8601): ');
-    if (!moment(registered_at).isValid()) {
+    if (!moment(registered_at, moment.ISO_8601, true).isValid()) {
         console.log('Invalid date');
         return;
     }
@@ -196,8 +196,8 @@ function bookInput()
         console.log('Not a number');
         return;
     }
-    const added = readlineSync('Enter date added (ISO 8601): ');
-    if (!moment(added).isValid()) {
+    const added = readlineSync.question('Enter date added (ISO 8601): ');
+    if (!moment(added, moment.ISO_8601, true).isValid()) {
         console.log('Invalid date');
         return;
     }

@@ -45,7 +45,7 @@ class BookRepository
     addBook(book_model)
     {
         let items = this.storage.readItems();
-        book_model.id = this.storage.nextId();
+        book_model.id = this.storage.nextId;
         this.storage.incrementNextId();
         items['items'].push({
             id: book_model.id,

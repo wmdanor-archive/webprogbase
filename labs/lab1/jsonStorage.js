@@ -15,7 +15,7 @@ function jsonParser(json_text)
 
 function jsonStringify(object)
 {
-    let json_text = JSON.stringify(object);
+    let json_text = JSON.stringify(object, null, 4);
     return json_text;
 }
 
@@ -54,16 +54,9 @@ class JsonStorage   // tut hueta, dodelatb !!!!!!!!!!!!!
 
     incrementNextId()
     {
-        try
-        {
-            let obj = jsonParser(readFile(this.__file_path+'_ids.json'));
-            obj['next_id']++;
-            this.writeItems(obj);
-        }
-        catch (err)
-        {
-            throw(err);
-        }
+        let obj = jsonParser(readFile(this.__file_path+'_ids.json'));
+        obj['next_id']++;
+        writeFile(this.__file_path+'_ids.json', jsonStringify(obj))
     }
 
     readItems()
@@ -81,14 +74,7 @@ class JsonStorage   // tut hueta, dodelatb !!!!!!!!!!!!!
 
     writeItems(items)
     {
-        try
-        {
-            writeFile(this.__file_path+'.json', jsonStringify(items));
-        }
-        catch (err)
-        {
-            throw(err);
-        }
+        writeFile(this.__file_path+'.json', jsonStringify(items));
     }
 };
 

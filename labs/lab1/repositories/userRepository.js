@@ -47,7 +47,7 @@ class UserRepository
     addUser(user_model)
     {
         let items = this.storage.readItems();
-        user_model.id = this.storage.nextId();
+        user_model.id = this.storage.nextId;
         this.storage.incrementNextId();
         items['items'].push({
             id: user_model.id,
