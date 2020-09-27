@@ -9,7 +9,7 @@ const Book = require('./models/book');
 let users = new UserRepository('./data/users');
 let books = new BookRepository('./data/books');
 
-console.log('app started')      // add&fix try catches
+console.log('app started')      // add&fix  try catches
 
 while(1) {
     const command = readlineSync.question('Enter command: ');
@@ -17,137 +17,147 @@ while(1) {
     const len = parsed.length;
     if (len === 1) {
         if (parsed[0] === 'exit') break;
-        else console.log('Invalid command');
+        else console.log('Invalid command (=1)');
     } else if (len > 3) {
-        console.log('Invalid command');
+        console.log('Invalid command(>3)');
     } else {
-        switch (parsed[0]) {
-            case 'get':     // get
-                if (len === 3) {        // /get/{e}/{id}
-                    const index = Number(parsed[2]);
-                    if (isNaN(index)) {
-                        console.log('Invalid id');
-                        break;
+        try {
+            switch (parsed[0]) {
+                case 'get':     // get
+                    if (len === 3) {        // /get/{e}/{id}
+                        const index = Number(parsed[2]);
+                        if (isNaN(index)) {
+                            console.log('Invalid id');
+                            break;
+                        }
+                        switch (parsed[1]) {
+                            case 'users':
+                                const usr = users.getUserById(index);
+                                if (usr === undefined) {
+                                    console.log('User does not exist');
+                                    break;
+                                } else console.log(usr);
+                                break;
+                            case 'books':
+                                const bk = books.getBookById(index);
+                                if (bk === undefined) {
+                                    console.log('Book does not exist');
+                                    break;
+                                } else console.log(bk);
+                                break;
+                            default:
+                                console.log('Invalid entity');
+                                break;
+                        }
+                    } else {            // /get/{e}
+                        switch (parsed[1]) {
+                            case 'users':
+                                const usrs = users.getUsers();
+                                console.log(usrs);
+                                break;
+                            case 'books':
+                                const bks = books.getBooks();
+                                console.log(bks);
+                                break;
+                            default:
+                                console.log('Invalid entity');
+                                break;
+                        }
                     }
-                    switch (parsed[1]) {
+                    break;
+                case 'delete':      // delete
+                    if (len === 2) console.log('Invalid command');
+                    else {
+                        const index = Number(parsed[2]);
+                        if (isNaN(index)) {
+                            console.log('Invalid id');
+                            break;
+                        }
+                        switch (parsed[1]) {
                         case 'users':
-                            const usr = users.getUserById(index);
+                            if (users.deleteUser(index)) console.log('User deleted');
+                            else console.log('User does not exist');
+                            break;
+                        case 'books':
+                            if (books.deleteBook(index)) console.log('Book deleted');
+                            else console.log('Book does not exist');
+                            break;
+                        default:
+                            console.log('Invalid entity');
+                            break;
+                    }
+                }
+                    break;
+                case 'update':      // update
+                    if (len === 2) console.log('Invalid command');
+                    else {
+                        const index = Number(parsed[2]);
+                        if (isNaN(index)) {
+                            console.log('Invalid id');
+                            break;
+                        }
+                        switch (parsed[1]) {
+                        case 'users':
+                            let usr = users.getUserById(index);
                             if (usr === undefined) {
                                 console.log('User does not exist');
                                 break;
-                            } else console.log(usr);
+                            }
+                            else {
+                                console.log(usr);
+                                const id = usr.id;
+                                usr = userInput();
+                                if (usr === undefined) break;
+                                usr.id = id;
+                                if (users.updateUser(usr)) console.log('Updating succesful');
+                                else console.log('Updating error');
+                            }
                             break;
                         case 'books':
-                            const bk = books.getBookById(index);
+                            let bk = books.getBookById(index);
                             if (bk === undefined) {
-                                console.log('Book does not exist');
+                                console.log('User does not exist');
                                 break;
-                            } else console.log(bk);
+                            }
+                            else {
+                                console.log(bk);
+                                const id = bk.id
+                                bk = bookInput();
+                                if (bk === undefined) break;
+                                bk.id = id;
+                                if (books.updateBook(bk)) console.log('Updating succesful');
+                                else console.log('Updating error');
+                            }
                             break;
                         default:
                             console.log('Invalid entity');
                             break;
+                        }
                     }
-                } else {            // /get/{e}
-                    switch (parsed[1]) {
+                    break;
+                case 'post':        // post
+                    if (len === 3) console.log('Invalid command');
+                    else switch (parsed[1]) {
                         case 'users':
-                            const usrs = users.getUsers();
-                            console.log(usrs);
+                            const usr = userInput();
+                            if (usr === undefined) break;
+                            users.addUser(usr);
                             break;
                         case 'books':
-                            const bks = books.getBooks();
-                            console.log(bks);
+                            const bk = bookInput();
+                            if (bk === undefined) break;
+                            books.addBook(bk);
                             break;
                         default:
                             console.log('Invalid entity');
                             break;
                     }
-                }
-                break;
-            case 'delete':      // delete
-                if (len === 2) console.log('Invalid command');
-                else switch (parsed[1]) {
-                    case 'users':
-                        if (users.deleteUser(parsed[2])) console.log('User deleted');
-                        else console.log('User does not exist');
-                        break;
-                    case 'books':
-                        if (books.deleteBook(parsed[2])) console.log('Book deleted');
-                        else console.log('Book does not exist');
-                        break;
-                    default:
-                        console.log('Invalid entity');
-                        break;
-                }
-                break;
-            case 'update':      // update
-                if (len === 2) console.log('Invalid command');
-                else {
-                    const index = Number(parsed[2]);
-                    if (isNaN(index)) {
-                        console.log('Invalid id');
-                        break;
-                    }
-                    switch (parsed[1]) {
-                    case 'users':
-                        let usr = users.getUserById(index);
-                        if (usr === undefined) {
-                            console.log('User does not exist');
-                            break;
-                        }
-                        else {
-                            console.log(usr); // ?
-                            const id = usr.id;
-                            usr = userInput(); // make func
-                            if (usr === undefined) break;
-                            usr.id = id;
-                            if (users.updateUser(usr)) console.log('Updating succesful');
-                            else console.log('Updating error');
-                        }
-                        break;
-                    case 'books':
-                        let bk = books.getBookById(index);
-                        if (bk === undefined) {
-                            console.log('User does not exist');
-                            break;
-                        }
-                        else {
-                            console.log(bk); // ?
-                            const id = bk.id
-                            bk = bookInput(); // make func
-                            if (bk === undefined) break;
-                            bk.id = id;
-                            if (books.updateBook(bk)) console.log('Updating succesful');
-                            else console.log('Updating error');
-                        }
-                        break;
-                    default:
-                        console.log('Invalid entity');
-                        break;
-                    }
-                }
-                break;
-            case 'post':        // post
-                if (len === 3) console.log('Invalid command');
-                else switch (parsed[1]) {
-                    case 'users':
-                        const usr = userInput(); // make func
-                        if (usr === undefined) break;
-                        users.addUser(usr);
-                        break;
-                    case 'books':
-                        const bk = bookInput(); // make func
-                        if (bk === undefined) break;
-                        books.addBook(bk);
-                        break;
-                    default:
-                        console.log('Invalid entity');
-                        break;
-                }
-                break;
-            default:
-                console.log('Invalid command');
-        }
+                    break;
+                default:
+                    console.log('Invalid command');
+                    break;
+            }
+        } catch (err) {console.log('Data corrupted (parse error)')}
     }
 }
 
@@ -161,7 +171,7 @@ function userInput()
         console.log('Not a number');
         return;
     }
-    else if (role != 0 || role != 1) {
+    else if (role != 0 && role != 1) {
         console.log('Invalid role');
         return;
     }
