@@ -31,10 +31,8 @@ function writeFile(file_path, json_text)
     fs.writeFileSync(file_path, json_text);
 }
 
-class JsonStorage   // tut hueta, dodelatb !!!!!!!!!!!!!
+class JsonStorage
 {
-    // filePath - path to JSON file
-    // ./../data/users.json
     constructor(file_path) {
         this.__file_path = file_path;
     }

@@ -10,21 +10,21 @@
             "is_enabled": true
         },
         {
-            "id": 2,
-            "login": "user 1",
-            "fullname": "User User",
-            "role": 0,
-            "registered_at": "2020-09-16T20:07:54+00:00",
-            "ava_url": null,
+            "id": 4,
+            "login": "ui1",
+            "fullname": "uu",
+            "role": 1,
+            "registered_at": "2020-09-26",
+            "ava_url": "url2",
             "is_enabled": true
         },
         {
-            "id": 4,
-            "login": "u1",
-            "fullname": "uu",
+            "id": 5,
+            "login": "lul1",
+            "fullname": "lul lul",
             "role": 0,
             "registered_at": "2020-09-27",
-            "ava_url": "url1",
+            "ava_url": "url22",
             "is_enabled": true
         }
     ]

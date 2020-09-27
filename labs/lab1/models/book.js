@@ -1,5 +1,3 @@
-const User = require("./user");
-
 class Book
 {
     constructor (id, title, original_language, publishment_year, pages, added)
