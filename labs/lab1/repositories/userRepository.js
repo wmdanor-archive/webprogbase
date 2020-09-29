@@ -47,6 +47,7 @@ class UserRepository
                     );
                 }
             }
+            return null;
         } catch (err) {
             throw err;
         }

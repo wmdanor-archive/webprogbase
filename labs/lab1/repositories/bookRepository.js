@@ -45,6 +45,7 @@ class BookRepository
                     );
                 }
             }
+            return null;
         } catch (err) {
             throw err;
         }

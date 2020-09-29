@@ -33,14 +33,14 @@ while(1) {
                         switch (parsed[1]) {
                             case 'users':
                                 const usr = users.getUserById(index);
-                                if (usr === undefined) {
+                                if (usr === null) {
                                     console.log('User does not exist');
                                     break;
                                 } else console.log(usr);
                                 break;
                             case 'books':
                                 const bk = books.getBookById(index);
-                                if (bk === undefined) {
+                                if (bk === null) {
                                     console.log('Book does not exist');
                                     break;
                                 } else console.log(bk);
@@ -99,7 +99,7 @@ while(1) {
                         switch (parsed[1]) {
                         case 'users':
                             let usr = users.getUserById(index);
-                            if (usr === undefined) {
+                            if (usr === null) {
                                 console.log('User does not exist');
                                 break;
                             }
@@ -107,7 +107,7 @@ while(1) {
                                 console.log(usr);
                                 const id = usr.id;
                                 usr = userInput();
-                                if (usr === undefined) break;
+                                if (usr === null) break;
                                 usr.id = id;
                                 if (users.updateUser(usr)) console.log('Updating succesful');
                                 else console.log('Updating error');
@@ -115,7 +115,7 @@ while(1) {
                             break;
                         case 'books':
                             let bk = books.getBookById(index);
-                            if (bk === undefined) {
+                            if (bk === null) {
                                 console.log('User does not exist');
                                 break;
                             }
@@ -123,7 +123,7 @@ while(1) {
                                 console.log(bk);
                                 const id = bk.id
                                 bk = bookInput();
-                                if (bk === undefined) break;
+                                if (bk === null) break;
                                 bk.id = id;
                                 if (books.updateBook(bk)) console.log('Updating succesful');
                                 else console.log('Updating error');
@@ -140,12 +140,12 @@ while(1) {
                     else switch (parsed[1]) {
                         case 'users':
                             const usr = userInput();
-                            if (usr === undefined) break;
+                            if (usr === null) break;
                             users.addUser(usr);
                             break;
                         case 'books':
                             const bk = bookInput();
-                            if (bk === undefined) break;
+                            if (bk === null) break;
                             books.addBook(bk);
                             break;
                         default:
@@ -169,23 +169,23 @@ function userInput()
     const role = Number(role_str);
     if (isNaN(role)) {
         console.log('Not a number');
-        return;
+        return null;
     }
     else if (role != 0 && role != 1) {
         console.log('Invalid role');
-        return;
+        return null;
     }
     const registered_at = readlineSync.question('Enter registration date (ISO 8601): ');
     if (!moment(registered_at, moment.ISO_8601, true).isValid()) {
         console.log('Invalid date');
-        return;
+        return null;
     }
     const ava_url = readlineSync.question('Enter ava url: ');
     const is_enabled_str = readlineSync.question('Is enabled? ');
     const is_enabled = stringToBool(is_enabled_str);
-    if (is_enabled === undefined) {
+    if (is_enabled === null) {
         console.log('Invalid value');
-        return;
+        return null;
     }
     return new User(-1, login, fullname, role, registered_at, ava_url, is_enabled);
 }
@@ -198,18 +198,18 @@ function bookInput()
     const publishment_year = Number(publishment_year_str);
     if (isNaN(publishment_year)) {
         console.log('Not a number');
-        return;
+        return null;
     }
     const pages_str = readlineSync.question('Enter number of pages (GOST R 7.0.3-2006): ');
     const pages = Number(pages_str);
     if (isNaN(pages)) {
         console.log('Not a number');
-        return;
+        return null;
     }
     const added = readlineSync.question('Enter date added (ISO 8601): ');
     if (!moment(added, moment.ISO_8601, true).isValid()) {
         console.log('Invalid date');
-        return;
+        return null;
     }
     return new Book(-1, title, original_language, publishment_year, pages, added);
 }
@@ -222,5 +222,7 @@ function stringToBool(str)
             return true;
         case 'false':
             return false;
+        default:
+            return null;
     }
 }

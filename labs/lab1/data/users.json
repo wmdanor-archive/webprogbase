@@ -5,8 +5,8 @@
             "login": "admin",
             "fullname": "Admin Admin",
             "role": 1,
-            "registered_at": "2020-09-15T18:29:06+00:00",
-            "ava_url": null,
+            "registered_at": "2020-09-15",
+            "ava_url": "null",
             "is_enabled": true
         },
         {
