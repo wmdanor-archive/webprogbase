@@ -1,0 +1,28 @@
+{
+    "items": [
+        {
+            "id": 2,
+            "title": "gf",
+            "original_language": "re",
+            "publishment_year": 12,
+            "pages": 34,
+            "added": "2020-09-23"
+        },
+        {
+            "id": 5,
+            "title": "bb",
+            "original_language": "bob",
+            "publishment_year": 1999,
+            "pages": 29,
+            "added": "2020-09-27"
+        },
+        {
+            "id": 6,
+            "title": "y",
+            "original_language": "y",
+            "publishment_year": 56,
+            "pages": 78,
+            "added": "2020-09-10"
+        }
+    ]
+}
