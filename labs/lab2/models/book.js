@@ -5,9 +5,8 @@
  * @property {string} original_language.required - original language
  * @property {integer} publishment_year.required - publishment year
  * @property {integer} pages.required - number of pages (GOST R 7.0.3-2006)
- * @property {date} added.required - date added (ISO8601)
+ * @property {string} added.required - date added (ISO8601)
  */
-
 class Book
 {
     constructor (id, title, original_language, publishment_year, pages, added)

@@ -4,7 +4,6 @@
  * @property {string} file_name - file name
  * @property {string} b64_str - base64 string of image (DO NOT USE)
  */
-
 class ImageInfo
 {
     constructor (id, file_name, b64_str = null)

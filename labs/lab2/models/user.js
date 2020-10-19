@@ -4,12 +4,10 @@
  * @property {string} login.required - unique username
  * @property {string} fullname.required - full name
  * @property {integer} role.required - 1 is admin, 0 is normal user
- * @property {date} registered_at.required - registration date (ISO8601)
+ * @property {string} registered_at.required - registration date (ISO8601)
  * @property {string} ava_url.required - ava url
  * @property {boolean} is_enabled.required - is user enabled
  */
-
-
 class User
 {
     constructor(id, login, fullname, role, registered_at, ava_url, is_enabled)

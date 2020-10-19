@@ -8,7 +8,7 @@ mediaRouter
      * @route POST /api/media
      * @group Images - image operations
      * @param {file} image_file.formData.required - image model to add
-     * @returns {Image.model} 201 - Image created
+     * @returns {ImageInfo.model} 201 - Image created
      * @returns {Error} 400 - Bad request
      */
     .post('/', mediaController.addImage)

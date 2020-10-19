@@ -35,8 +35,11 @@ mainRouter.use((req, res) => {
     res.sendStatus(400);
 });
 
-mainRouter.use((err, req, res) => {
-    //
+mainRouter.use((err, req, res, next) => {
+    console.log('internal error caught')
+    console.log(err.message);
+    res.status(500);
+    res.send(err.message);
 });
 
 mainRouter.listen(55555, () => {

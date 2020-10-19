@@ -16,7 +16,7 @@ bookRouter
      * @route GET /api/books
      * @group Books - book operations
      * @param {integer} page.query - page of the books list (page size is 8, default = 1)
-     * @returns {Array.<Book.model>} 200 - Books page
+     * @returns {Array.<Book>} 200 - Books page
      * @returns {Error} 400 - Bad request
     */
     .get('/:id', bookController.getBook)

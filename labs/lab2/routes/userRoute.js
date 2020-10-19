@@ -18,7 +18,7 @@ userRouter
      * @route GET /api/users
      * @group Users - user operations
      * @param {integer} page.query - page of the users list (page size is 8, default = 1)
-     * @returns {Array.<User.model>} 200 - Users page
+     * @returns {Array.<User>} 200 - Users page
      * @returns {Error} 400 - Bad request
      */
     .get('/:id', userController.getUser);
