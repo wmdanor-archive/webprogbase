@@ -1,10 +1,8 @@
 const express = require('express');
-const busboyBodyParser = require('busboy-body-parser');
 
-const options = {
-    limit: '16mb',
-    multi: false,
-};
+const body_parser = require('body-parser')
+const multer  = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 const mainRouter = express();
 const apiRouter = require('./apiRoute');
@@ -27,7 +25,21 @@ const config = {
 };
 expressSwagger(config);
 
-mainRouter.use(busboyBodyParser(options));
+mainRouter.post('/api/books/', body_parser.json(), (err, req, res, next) => {
+    if (err)
+    {
+        res.status(400).json({ error_message: err.message, error_object: err });
+    }
+    next();
+});
+mainRouter.put('/api/books/', body_parser.json(), (err, req, res, next) => {
+    if (err)
+    {
+        res.status(400).json({ error_message: err.message, error_object: err });
+    }
+    next();
+});
+mainRouter.post('/api/media/', upload.single('image_file'), (res, req, next) => { next(); });
 
 mainRouter.use('/api', apiRouter);
 
@@ -35,11 +47,11 @@ mainRouter.use((req, res) => {
     res.sendStatus(400);
 });
 
-mainRouter.use((err, req, res, next) => {
+mainRouter.use('/api', (err, req, res, next) => {
     console.log('internal error caught')
     console.log(err.message);
-    res.status(500);
-    res.send(err.message);
+
+    res.status(500).json(err);
 });
 
 mainRouter.listen(55555, () => {

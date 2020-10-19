@@ -2,8 +2,6 @@ const UserRepository = require('./../repositories/userRepository');
 
 const userRepository = new UserRepository('./data/users');
 
-const busboy = require('busboy-body-parser');
-
 const page_size = 8;
 
 module.exports = 
@@ -17,9 +15,9 @@ module.exports =
             else 
             {
                 page = Number(page_str);
-                if (isNaN(page)) { output.sendStatus(400); return; }
-                if (!Number.isInteger(page)) { output.sendStatus(400); return; }
-                if (page < 1) { output.sendStatus(400); return; }
+                if (isNaN(page)) { output.status(400).json({ error : 'page is not a number' }); return; }
+                if (!Number.isInteger(page)) { output.status(400).json({ error : 'page is not an integer' }); return; }
+                if (page < 1) { output.status(400).json({ error : 'invalid page value (page < 1)' }); return; }
             }
 
             const users = userRepository.getUsers();
@@ -27,15 +25,14 @@ module.exports =
             const offset = page_size * (page - 1);
             if (offset === 0 && size === 0)
             {
-                output.status(200);
-                output.json([]);
+                output.status(200).json([]);
                 return;
             }
-            if (offset >= size) { output.sendStatus(400); return; }
+            if (offset >= size) { output.status(400).json({ error : 'offset is bigger than users number (page size is 8)' }); return; }
 
             const users_page = users.slice(offset, offset + page_size);
 
-            let arr = [];
+            const arr = [];
             for (const user of users_page)
             {
                 arr.push({
@@ -48,8 +45,7 @@ module.exports =
                     is_enabled: user.is_enabled
                 });
             }
-            output.status(200);
-            output.json(arr);
+            output.status(200).json(arr);
         }
         catch (err)
         {
@@ -62,16 +58,14 @@ module.exports =
         try {
             const id_str = input.params.id;
             const id = Number(id_str);
-            if (isNaN(id)) { output.sendStatus(400); return; }
-            if (!Number.isInteger(id)) { output.sendStatus(400); return; }
-            if (id < 1) { output.sendStatus(400); return; }
+            if (isNaN(id)) { output.status(400).json({ error : 'id is not a number' }); return; }
+            if (!Number.isInteger(id)) { output.status(400).json({ error : 'id is not an integer' }); return; }
+            if (id < 1) { output.status(400).json({ error : 'invalid id value (id < 1)' }); return; }
             
             const user = userRepository.getUserById(id);
-            if (user === null) { output.sendStatus(404); return; }
+            if (user === null) { output.status(404).json({ error: 'user not found' }); return; }
             else
             {
-                output.status(200);
-                // output.type('json');
                 const obj = {
                     id: user.id,
                     login: user.login,
@@ -81,7 +75,7 @@ module.exports =
                     ava_url: user.ava_url,
                     is_enabled: user.is_enabled
                 };
-                output.json(obj);
+                output.status(200).json(obj);
             }
         }
         catch (err)
