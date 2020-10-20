@@ -16,8 +16,7 @@ module.exports =
     addImage(input, output)
     {
         try {
-            const img = mediaRepository.addImage(new ImageInfo(0, input.file.originalname));
-            fs.writeFileSync('./data/images/'+img.id+'_'+img.file_name, fs.readFileSync(input.file.path));
+            const img = mediaRepository.addImage(new ImageInfo(0, input.file.originalname, input.file.path));
             output.status(201).json({id: img.id, file_name: img.file_name});
         }
         catch (err)
@@ -38,10 +37,7 @@ module.exports =
             
             const image = mediaRepository.getImageById(id);
             if (image === null) throw new HttpError(404, 'image not found');
-            else
-            {
-                output.status(200).download('./data/images/'+id+'_'+image.file_name);
-            }
+            else output.status(200).download(image.file_path, image.file_name);
         }
         catch (err)
         {

@@ -2,31 +2,8 @@
     "items": [
         {
             "id": 1,
-            "file_name": "15905888260570.jpg"
-        },
-        {
-            "id": 2,
-            "file_name": "16012291296020.jpg"
-        },
-        {
-            "id": 3,
-            "file_name": "157677292970.jpg"
-        },
-        {
-            "id": 4,
-            "file_name": "15932890024640.png"
-        },
-        {
-            "id": 5,
-            "file_name": "15761001288850.jpg"
-        },
-        {
-            "id": 6,
-            "file_name": "23524.jpg"
-        },
-        {
-            "id": 7,
-            "file_name": "cilDYd3phP0.jpg"
+            "file_name": "123.png",
+            "file_path": "data\\images\\0fd05943fca9ce1d3380661bd7e2c08f"
         }
     ]
 }

@@ -3,7 +3,7 @@ const HttpError = require('./../httpError');
 
 const body_parser = require('body-parser')
 const multer  = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: 'data/images/' });
 
 const mainRouter = express();
 const apiRouter = require('./apiRoute');
