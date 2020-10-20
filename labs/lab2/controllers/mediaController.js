@@ -2,6 +2,7 @@ const MediaRepository = require('./../repositories/mediaRepository');
 const ImageInfo = require('./../models/image');
 
 const mediaRepository = new MediaRepository('./data/images');
+const HttpError = require('./../httpError');
 
 const fs = require('fs');
 
@@ -21,7 +22,8 @@ module.exports =
         }
         catch (err)
         {
-            throw err;
+            if (err instanceof HttpError) throw err;
+            else throw new HttpError(500, err.message);
         }
     },
 
@@ -30,12 +32,12 @@ module.exports =
         try {
             const id_str = input.params.id;
             const id = Number(id_str);
-            if (isNaN(id)) { output.status(400).json({ error : 'id is not a number' }); return; }
-            if (!Number.isInteger(id)) { output.status(400).json({ error : 'id is not an integer' }); return; }
-            if (id < 1) { output.status(400).json({ error : 'invalid id value (id < 1)' }); return; }
+            if (isNaN(id)) throw new HttpError(400, 'id is not a number');
+            if (!Number.isInteger(id)) throw new HttpError(400, 'id is not an integer');
+            if (id < 1) throw new HttpError(400, 'invalid id value (id < 1)');
             
             const image = mediaRepository.getImageById(id);
-            if (image === null) { output.status(404).json({ error: 'image not found' }); return; }
+            if (image === null) throw new HttpError(404, 'image not found');
             else
             {
                 output.status(200).download('./data/images/'+id+'_'+image.file_name);
@@ -43,7 +45,8 @@ module.exports =
         }
         catch (err)
         {
-            throw err;
+            if (err instanceof HttpError) throw err;
+            else throw new HttpError(500, err.message);
         }
     }
 }

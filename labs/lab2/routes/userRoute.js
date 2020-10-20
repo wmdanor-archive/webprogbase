@@ -1,8 +1,8 @@
-const express = require('express');
-const User = require('../models/user');
 const userController = require('./../controllers/userController');
 
 const userRouter = require('express').Router();
+
+const HttpError = require('./../httpError');
 
 userRouter
     /**
@@ -24,7 +24,7 @@ userRouter
     .get('/:id', userController.getUser);
 
 userRouter.use((req, res) => {
-    res.sendStatus(400);
+    throw new HttpError(400, 'command not found');
 });
 
 module.exports = userRouter;

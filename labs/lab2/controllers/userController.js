@@ -1,6 +1,8 @@
 const UserRepository = require('./../repositories/userRepository');
+const User = require('./../models/user');
 
 const userRepository = new UserRepository('./data/users');
+const HttpError = require('./../httpError');
 
 const page_size = 8;
 
@@ -15,9 +17,9 @@ module.exports =
             else 
             {
                 page = Number(page_str);
-                if (isNaN(page)) { output.status(400).json({ error : 'page is not a number' }); return; }
-                if (!Number.isInteger(page)) { output.status(400).json({ error : 'page is not an integer' }); return; }
-                if (page < 1) { output.status(400).json({ error : 'invalid page value (page < 1)' }); return; }
+                if (isNaN(page)) throw new HttpError(400, 'page is not a number');
+                if (!Number.isInteger(page)) throw new HttpError(400, 'page is not an integer');
+                if (page < 1) throw new HttpError(400, 'invalid page value (page < 1)');
             }
 
             const users = userRepository.getUsers();
@@ -28,7 +30,7 @@ module.exports =
                 output.status(200).json([]);
                 return;
             }
-            if (offset >= size) { output.status(400).json({ error : 'offset is bigger than users number (page size is 8)' }); return; }
+            if (offset >= size) throw new HttpError(400, 'offset is bigger than users number (page size is 8)');
 
             const users_page = users.slice(offset, offset + page_size);
 
@@ -49,7 +51,8 @@ module.exports =
         }
         catch (err)
         {
-            throw err;
+            if (err instanceof HttpError) throw err;
+            else throw new HttpError(500, err.message);
         }
     },
 
@@ -58,12 +61,12 @@ module.exports =
         try {
             const id_str = input.params.id;
             const id = Number(id_str);
-            if (isNaN(id)) { output.status(400).json({ error : 'id is not a number' }); return; }
-            if (!Number.isInteger(id)) { output.status(400).json({ error : 'id is not an integer' }); return; }
-            if (id < 1) { output.status(400).json({ error : 'invalid id value (id < 1)' }); return; }
+            if (isNaN(id)) throw new HttpError(400, 'id is not a number');
+            if (!Number.isInteger(id)) throw new HttpError(400, 'id is not an integer');
+            if (id < 1) throw new HttpError(400, 'invalid id value (id < 1)');
             
             const user = userRepository.getUserById(id);
-            if (user === null) { output.status(404).json({ error: 'user not found' }); return; }
+            if (user === null) throw new HttpError(404, 'user not found');
             else
             {
                 const obj = {
@@ -80,7 +83,8 @@ module.exports =
         }
         catch (err)
         {
-            throw err;
+            if (err instanceof HttpError) throw err;
+            else throw new HttpError(500, err.message);
         }
     }
 }

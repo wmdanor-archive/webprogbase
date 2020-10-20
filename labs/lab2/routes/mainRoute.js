@@ -1,4 +1,5 @@
 const express = require('express');
+const HttpError = require('./../httpError');
 
 const body_parser = require('body-parser')
 const multer  = require('multer');
@@ -26,17 +27,11 @@ const config = {
 expressSwagger(config);
 
 mainRouter.post('/api/books/', body_parser.json(), (err, req, res, next) => {
-    if (err)
-    {
-        res.status(400).json({ error_message: err.message, error_object: err });
-    }
+    if (err) throw new HttpError(400, err.message);
     next();
 });
 mainRouter.put('/api/books/', body_parser.json(), (err, req, res, next) => {
-    if (err)
-    {
-        res.status(400).json({ error_message: err.message, error_object: err });
-    }
+    if (err) throw new HttpError(400, err.message);
     next();
 });
 mainRouter.post('/api/media/', upload.single('image_file'), (res, req, next) => { next(); });
@@ -44,14 +39,14 @@ mainRouter.post('/api/media/', upload.single('image_file'), (res, req, next) => 
 mainRouter.use('/api', apiRouter);
 
 mainRouter.use((req, res) => {
-    res.sendStatus(400);
+    throw new HttpError(400, 'command not found');
 });
 
-mainRouter.use('/api', (err, req, res, next) => {
-    console.log('internal error caught')
-    console.log(err.message);
+mainRouter.use((err, req, res, next) => {
+    console.log('error caught\n{')
+    console.log('    status code: ' + err.status_code + ', message: ' + err.message + '\n}');
 
-    res.status(500).json(err);
+    res.status(err.status_code).json({ error: err.message });
 });
 
 mainRouter.listen(55555, () => {

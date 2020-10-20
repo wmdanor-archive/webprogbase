@@ -4,13 +4,15 @@ const mediaRouter = require('./mediaRoute');
 
 const apiRouter = require('express').Router();
 
+const HttpError = require('./../httpError');
+
 apiRouter
     .use('/users', userRouter)
     .use('/books', bookRouter)
     .use('/media', mediaRouter);
 
 apiRouter.use((req, res) => {
-    res.sendStatus(400);
+    throw new HttpError(400, 'command not found');
 });
 
 module.exports = apiRouter;

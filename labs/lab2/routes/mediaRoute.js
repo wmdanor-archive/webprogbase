@@ -1,7 +1,8 @@
-const express = require('express');
 const mediaController = require('../controllers/mediaController');
 
 const mediaRouter = require('express').Router();
+
+const HttpError = require('./../httpError');
 
 mediaRouter
     /**
@@ -23,7 +24,7 @@ mediaRouter
     .get('/:id', mediaController.getImage);
 
 mediaRouter.use((req, res) => {
-    res.sendStatus(400);
+    throw new HttpError(400, 'command not found');
 });
 
 module.exports = mediaRouter;

@@ -1,8 +1,8 @@
 const BookRepository = require('./../repositories/bookRepository');
+const Book = require('./../models/book');
 
 const bookRepository = new BookRepository('./data/books');
-
-const Book = require('../models/book');
+const HttpError = require('./../httpError');
 
 const moment = require('moment');
 
@@ -24,20 +24,19 @@ function bookParser(obj, id_check = false)
 {
     try
     {
-        // const obj = JSON.parse(json_obj);
         let id;
         if (id_check)
         {
             id = obj['id'];
-            if (!Number.isInteger(id)) { throw new Error('id is not an integer'); }
-            else if (id < 1) { throw new Error('invalid id value (id < 1)'); }
+            if (!Number.isInteger(id)) { throw new HttpError(400, 'id is not an integer'); }
+            else if (id < 1) { throw new HttpError(400, 'invalid id value (id < 1)'); }
         }
         else { id = 0; }
 
         if (typeof obj['title'] != 'string' || typeof obj['original_language'] != 'string' ||
             typeof obj['added'] != 'string' || !Number.isInteger(obj['publishment_year']) ||
-            !Number.isInteger(obj['pages'])) { throw new Error('invalid field types'); }
-        else if (!moment(obj['added'], moment.ISO_8601, true).isValid()) { throw new Error('invalid date format'); }
+            !Number.isInteger(obj['pages'])) throw new HttpError(400, 'invalid field types');
+        else if (!moment(obj['added'], moment.ISO_8601, true).isValid()) throw new HttpError(400, 'invalid date format');
         else 
         {
             return new Book(
@@ -52,7 +51,8 @@ function bookParser(obj, id_check = false)
     }
     catch (err)
     {
-        throw err;
+        if (err instanceof HttpError) throw err;
+        else throw new HttpError(400, err.message);
     }
 }
 
@@ -67,9 +67,9 @@ module.exports =
             else 
             {
                 page = Number(page_str);
-                if (isNaN(page)) { output.status(400).json({ error : 'page is not a number' }); return; }
-                if (!Number.isInteger(page)) { output.status(400).json({ error : 'page is not an integer' }); return; }
-                if (page < 1) { output.status(400).json({ error : 'invalid page value (page < 1)' }); return; }
+                if (isNaN(page)) throw new HttpError(400, 'page is not a number');
+                if (!Number.isInteger(page)) throw new HttpError(400, 'page is not an integer');
+                if (page < 1) throw new HttpError(400, 'invalid page value (page < 1)');
             }
 
             const books = bookRepository.getBooks();
@@ -80,7 +80,7 @@ module.exports =
                 output.status(200).json([]);
                 return;
             }
-            if (offset >= size) { output.status(400).json({ error : 'offset is bigger than users number (page size is 8)' }); return; }
+            if (offset >= size) throw new HttpError(400, 'offset is bigger than books number (page size is 8)');
 
             const books_page = books.slice(offset, offset + page_size);
 
@@ -93,7 +93,8 @@ module.exports =
         }
         catch (err)
         {
-            throw err;
+            if (err instanceof HttpError) throw err;
+            else throw new HttpError(500, err.message);
         }
     },
 
@@ -102,12 +103,12 @@ module.exports =
         try {
             const id_str = input.params.id;
             const id = Number(id_str);
-            if (isNaN(id)) { output.status(400).json({ error : 'id is not a number' }); return; }
-            if (!Number.isInteger(id)) { output.status(400).json({ error : 'id is not an integer' }); return; }
-            if (id < 1) { output.status(400).json({ error : 'invalid id value (id < 1)' }); return; }
+            if (isNaN(id)) throw new HttpError(400, 'id is not a number');
+            if (!Number.isInteger(id)) throw new HttpError(400, 'id is not an integer');
+            if (id < 1) throw new HttpError(400, 'invalid id value (id < 1)');
             
             const book = bookRepository.getBookById(id);
-            if (book === null) { output.status(404).json({ error: 'book not found' }); return; }
+            if (book === null) throw new HttpError(404, 'book not found');
             else
             {
                 const obj = bookToObject(book);
@@ -116,61 +117,32 @@ module.exports =
         }
         catch (err)
         {
-            throw err;
+            if (err instanceof HttpError) throw err;
+            else throw new HttpError(500, err.message);
         }
     },
 
     addBook(input, output)
     {
         try {
-            try
-            {
-                const book_model = bookParser(input.body);
-                const book = bookRepository.addBook(book_model);
-                const obj = bookToObject(book);
-                output.status(201).json(obj);
-            }
-            catch (err) { output.status(400).json({ error : err.message }); return; }
+            const book_model = bookParser(input.body);
+            const book = bookRepository.addBook(book_model);
+            const obj = bookToObject(book);
+            output.status(201).json(obj);
         }
         catch (err)
         {
-            throw err;
+            if (err instanceof HttpError) throw err;
+            else throw new HttpError(500, err.message);
         }
     },
 
     updateBook(input, output)
     {
         try {
-            try
-            {
-                const book_model = bookParser(input.body, true);
-                const book = bookRepository.updateBook(book_model);
-                if (book === null) { output.status(404).json({ error: 'book not found' }); return; }
-                else
-                {
-                    const obj = bookToObject(book);
-                    output.status(200).json(obj);
-                }
-            }
-            catch (err) { output.status(400).json({ error : err.message }); return; }
-        }
-        catch (err)
-        {
-            throw err;
-        }
-    },
-
-    deleteBook(input, output)
-    {
-        try {
-            const id_str = input.params.id;
-            const id = Number(id_str);
-            if (isNaN(id)) { output.status(400).json({ error : 'id is not a number' }); return; }
-            if (!Number.isInteger(id)) { output.status(400).json({ error : 'id is not an integer' }); return; }
-            if (id < 1) { output.status(400).json({ error : 'invalid id value (id < 1)' }); return; }
-
-            const book = BookRepository.deleteBook(id);
-            if (book === null) { output.status(404).json({ error: 'book not found' }); return; }
+            const book_model = bookParser(input.body, true);
+            const book = bookRepository.updateBook(book_model);
+            if (book === null) throw new HttpError(404, 'book not found' );
             else
             {
                 const obj = bookToObject(book);
@@ -179,7 +151,32 @@ module.exports =
         }
         catch (err)
         {
-            throw err;
+            if (err instanceof HttpError) throw err;
+            else throw new HttpError(500, err.message);
+        }
+    },
+
+    deleteBook(input, output)
+    {
+        try
+        {
+            const id_str = input.params.id;
+            const id = Number(id_str);
+            if (isNaN(id)) throw new HttpError(400, 'id is not a number');
+            if (!Number.isInteger(id)) throw new HttpError(400, 'id is not an integer' );
+            if (id < 1) throw new HttpError(400, 'invalid id value (id < 1)');
+            const book = bookRepository.deleteBook(id);
+            if (book === null) throw new HttpError(404, 'book not found');
+            else
+            {
+                const obj = bookToObject(book);
+                output.status(200).json(obj);
+            }
+        }
+        catch (err)
+        {
+            if (err instanceof HttpError) throw err;
+            else throw new HttpError(500, err.message);
         }
     }
 }

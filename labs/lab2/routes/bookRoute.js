@@ -2,6 +2,8 @@ const bookController = require('./../controllers/bookController')
 
 const bookRouter = require('express').Router();
 
+const HttpError = require('./../httpError');
+
 bookRouter
     /**
      * @route GET /api/books/{id}
@@ -48,7 +50,7 @@ bookRouter
     .delete('/:id',bookController.deleteBook);
 
 bookRouter.use((req, res) => {
-    res.sendStatus(400);
+    throw new HttpError(400, 'command not found');
 });
 
 module.exports = bookRouter;
