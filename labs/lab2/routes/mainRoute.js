@@ -49,8 +49,4 @@ mainRouter.use((err, req, res, next) => {
     res.status(err.status_code).json({ error: err.message });
 });
 
-mainRouter.listen(55555, () => {
-    console.log('Server started');
-});
-
 module.exports = mainRouter;

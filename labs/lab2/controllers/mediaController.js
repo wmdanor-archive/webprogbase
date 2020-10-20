@@ -4,13 +4,6 @@ const ImageInfo = require('./../models/image');
 const mediaRepository = new MediaRepository('./data/images');
 const HttpError = require('./../httpError');
 
-const fs = require('fs');
-
-const options = {
-    limit: '16mb',
-    multi: false,
-};
-
 module.exports = 
 {
     addImage(input, output)
