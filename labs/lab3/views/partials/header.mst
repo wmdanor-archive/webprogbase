@@ -1,0 +1,14 @@
+<header>
+    <div class="website_name">
+        <img src="/images/cat.png" alt="logo" align="middle" height="100px">
+        <span id="span_right">
+            <h1>lab3 bruh zone</h1>
+        </span>
+    </div>
+    <div class="navigation">
+        <a href="/" class="{{home_current}}">Home</a>
+        <a href="/users" class="{{users_current}}">Users</a>
+        <a href="/books" class="{{books_current}}">Books</a>
+        <a href="/about" class="{{about_current}}" style="float: right">About</a>
+    </div>
+</header>

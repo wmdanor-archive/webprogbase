@@ -1,0 +1,14 @@
+{
+    "items": [
+        {
+            "id": 1,
+            "file_name": "123.png",
+            "file_path": "data\\images\\0fd05943fca9ce1d3380661bd7e2c08f"
+        },
+        {
+            "id": 2,
+            "file_name": "голова.jpg",
+            "file_path": "data\\images\\5ebb990b8784ae5ea1c54973b6911739"
+        }
+    ]
+}

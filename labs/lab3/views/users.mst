@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  {{> head }}
+  <body>
+    {{> header }}
+    <main>
+      <table>
+        <tr>
+            <td>Login</td>
+            <td>Full name</td>
+            <td>Registered</td>
+        </tr>
+        {{#users_page}}
+        <tr>
+            <td><a href="/users/{{id}}">{{login}}</a></td>
+            <td>{{fullname}}</td>
+            <td>{{registered_at}}</td>
+        </tr>
+        {{/users_page}}
+      </table>
+      <div class="paginator">
+        <menu>
+          <li class="arrow">{{{prev_page}}}</li>
+          <li><span>{{page}}</span></li>
+          <li class="arrow">{{{next_page}}}</li>
+        </menu>
+      </div>
+    </main>
+  </body>
+</html>

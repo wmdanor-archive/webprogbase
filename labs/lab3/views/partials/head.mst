@@ -1,0 +1,4 @@
+<head>
+    <title>{{ head_title }}</title>
+    <link type="text/css" href="/stylesheets/style.css" rel="stylesheet" />
+</head>

@@ -1,0 +1,99 @@
+
+body {
+    width: 960px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    border: solid 1px black;
+}
+
+header {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+main {
+    align-content: center;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid black;
+    width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td {
+    border: solid 1px black;
+    padding: 4px;
+}
+
+.navigation {
+    overflow: hidden;
+    border: 1px solid #e7e7e7;
+    background-color: #f3f3f3;
+    margin: 3px;
+}
+
+.navigation a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.navigation a:hover {
+    background-color: #dddddd;
+}
+
+.navigation a.current {
+    background-color: #008CBA;
+    color: white;
+}
+
+.website_name {
+    border: solid 1px black;
+    padding: 5px;
+    margin: 3px;
+}
+
+.paginator {
+    margin: 3px;
+    text-align: center;
+}
+
+.paginator menu {
+    list-style-type: disc;
+}
+
+.paginator li {
+    color: black;
+    text-align: center;
+    font-size: 17px;
+    display: inline;
+}
+
+.paginator li span {
+    padding: 4px 4px;
+}
+
+.paginator li a {
+    color: blue;
+    text-decoration: none;
+    padding: 4px 4px;
+}
+
+.paginator li a:hover {
+    color: white;
+    background-color: blue;
+}
+
+#span_right {
+    vertical-align: middle;
+    display: inline-block;
+    align-self: center;
+}

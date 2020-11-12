@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  {{> head }}
+  <body>
+    {{> header }}
+    <main>
+      <table>
+        <tr>
+            <td>Title</td>
+            <td>Publishment year</td>
+            <td>Added</td>
+        </tr>
+        {{#books_page}}
+        <tr>
+            <td><a href="/books/{{id}}">{{title}}</a></td>
+            <td>{{publishment_year}}</td>
+            <td>{{added}}</td>
+        </tr>
+        {{/books_page}}
+      </table>
+      <div class="paginator">
+        <menu>
+          <li class="arrow">{{{prev_page}}}</li>
+          <li><span>{{page}}</span></li>
+          <li class="arrow">{{{next_page}}}</li>
+        </menu>
+      </div>
+    </main>
+  </body>
+</html>
