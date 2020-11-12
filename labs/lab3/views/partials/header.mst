@@ -1,8 +1,8 @@
 <header>
     <div class="website_name">
-        <img src="/images/cat.png" alt="logo" align="middle" height="100px">
+        <img src="/images/cat.png" alt="logo" align="middle" height="100px" style="margin-right:8px">
         <span id="span_right">
-            <h1>lab3 bruh zone</h1>
+            <h1>Laboratory work #3 «Bruh zone»</h1>
         </span>
     </div>
     <div class="navigation">

@@ -3,6 +3,11 @@
   {{> head }}
   <body>
     {{> header }}
-    <h1>about</h1>
+    <div style="margin: 8px">
+        <img src="/images/bruh.jpg" alt="me" align="middle" height="100px" style="margin-right:8px">
+        <span id="span_right">
+            <h2>Me after typing 3k rows in one day</h2>
+        </span>
+    </div>
   </body>
 </html>
