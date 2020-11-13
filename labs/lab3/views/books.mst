@@ -4,6 +4,9 @@
   <body>
     {{> header }}
     <main>
+      <form action="/books" method="GET">
+        <input type="text" name="title" style="width: 360px" value="{{title_value}}"><input type="submit" value="Search">
+      </form>
       <table>
         <tr>
             <td>Title</td>
@@ -17,14 +20,18 @@
             <td>{{added}}</td>
         </tr>
         {{/books_page}}
+        {{{null_result}}}
       </table>
       <div class="paginator">
         <menu>
           <li class="arrow">{{{prev_page}}}</li>
-          <li><span>{{page}}</span></li>
+          {{#pages}}
+          <li>{{{.}}}</li>
+          {{/pages}}
           <li class="arrow">{{{next_page}}}</li>
         </menu>
       </div>
     </main>
+    {{> footer }}
   </body>
 </html>

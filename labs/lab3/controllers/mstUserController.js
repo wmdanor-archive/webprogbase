@@ -25,6 +25,7 @@ module.exports =
 
             const users = userRepository.getUsers();
             const size =  users.length;
+            const max_page = Math.ceil(size/page_size);
             const offset = page_size * (page - 1);
             if (offset === 0 && size === 0)
             {
@@ -49,7 +50,30 @@ module.exports =
             let next_page = '<span>&gt;</span>';
             if (page != 1) prev_page = '<a href=\"/users?page=' + (page-1) + '\">&lt;</a>'
             if (offset + page_size < size) next_page = '<a href=\"/users?page=' + (page+1) + '\">&gt;</a>'
-            params = {head_title: 'Users', users_page: arr, users_current: 'current', next_page: next_page, prev_page: prev_page, page: page}
+
+            let pages = []
+
+            if (page > 5)
+            {
+                pages.push('<a href=\"/users?page=1\">1</a>');
+                if (page != 6) pages.push('<span>...</span>');
+            }
+            for (i = Math.max(page-4, 1); i < page; i++)
+            {
+                pages.push('<a href=\"/users?page=' + i + '\">' + i + '</a>');
+            }
+            pages.push('<span>' + page + '</span>');
+            for (i = page+1; i <= Math.min(page+4, max_page); i++)
+            {
+                pages.push('<a href=\"/users?page=' + i + '\">' + i + '</a>');
+            }
+            if (page < max_page - 4)
+            {
+                if (page != max_page - 5) pages.push('<span>...</span>');
+                pages.push('<a href=\"/users?page=' + max_page + '\">' + max_page + '</a>');
+            }
+
+            params = {head_title: 'Users', users_page: arr, users_current: 'current', next_page: next_page, prev_page: prev_page, pages: pages}
             output.status(200).render('users', params);
         }
         catch (err)

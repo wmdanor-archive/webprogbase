@@ -2,27 +2,37 @@
 body {
     width: 960px;
     margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
     padding: 5px;
     border: solid 1px black;
 }
 
-header {
+body, table, form, header, footer {
     margin-left: auto;
     margin-right: auto;
 }
 
-main {
-    align-content: center;
+footer {
+    text-align: center;
+}
+
+form {
+    text-align: center;
+    margin-bottom: 3px;
 }
 
 table {
     border-collapse: collapse;
     border: 1px solid black;
     width: 720px;
-    margin-left: auto;
-    margin-right: auto;
+}
+
+table a, footer a {
+    text-decoration: none;
+    color: #0000ff;
+}
+
+table a:hover, footer a:hover {
+    color: #4b87d1;
 }
 
 td {
@@ -92,7 +102,7 @@ td {
     background-color: blue;
 }
 
-#span_right {
+.span_right {
     vertical-align: middle;
     display: inline-block;
     align-self: center;

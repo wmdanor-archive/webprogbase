@@ -6,7 +6,7 @@ const HttpError = require('./../httpError');
 
 const moment = require('moment');
 
-const page_size = 8;
+const page_size = 1;
 
 function bookToObject(book)
 {
@@ -62,6 +62,7 @@ module.exports =
     {
         try {
             const page_str = input.query.page;
+            const title_search = input.query.title;
             let page;
             if (page_str === undefined) page = 1;
             else 
@@ -72,12 +73,21 @@ module.exports =
                 if (page < 1) throw new HttpError(400, 'invalid page value (page < 1)');
             }
 
-            const books = bookRepository.getBooks();
+            let books = bookRepository.getBooks();
+
+            if (!(title_search === undefined))
+            {
+                books = books.filter(item => item.title.includes(title_search));
+            }
+            
             const size =  books.length;
+            const max_page = Math.ceil(size/page_size);
             const offset = page_size * (page - 1);
             if (offset === 0 && size === 0)
             {
-                output.status(200).json([]);
+                output.status(200).render('books', {head_title: 'Books', books_page: null, books_current: 'current',
+                    next_page: '<span>&gt;</span>', prev_page: '<span>&lt;</span>', page: null, title_value: title_search,
+                    null_result: '<tr><td colspan=3 style=\"text-align: center;\">Nobody here but us chickens!</td></tr>'});
                 return;
             }
             if (offset >= size) throw new HttpError(400, 'offset is bigger than books number (page size is 8)');
@@ -91,9 +101,34 @@ module.exports =
             }
             let prev_page = '<span>&lt;</span>';
             let next_page = '<span>&gt;</span>';
-            if (page != 1) prev_page = '<a href=\"/books?page=' + (page-1) + '\">&lt;</a>'
-            if (offset + page_size < size) next_page = '<a href=\"/books?page=' + (page+1) + '\">&gt;</a>'
-            params = {head_title: 'Books', books_page: arr, books_current: 'current', next_page: next_page, prev_page: prev_page, page: page}
+            let title_query = ''; 
+            if (!(title_search === undefined)) title_query = '&title=' + title_search;
+            if (page != 1) prev_page = '<a href=\"/books?page=' + (page-1) + title_query + '\">&lt;</a>'
+            if (offset + page_size < size) next_page = '<a href=\"/books?page=' + (page+1) + title_query + '\">&gt;</a>'
+
+            let pages = []
+
+            if (page > 5)
+            {
+                pages.push('<a href=\"/books?page=1' + title_query + '\">1</a>');
+                if (page != 6) pages.push('<span>...</span>');
+            }
+            for (i = Math.max(page-4, 1); i < page; i++)
+            {
+                pages.push('<a href=\"/books?page=' + i + title_query + '\">' + i + '</a>');
+            }
+            pages.push('<span>' + page + '</span>');
+            for (i = page+1; i <= Math.min(page+4, max_page); i++)
+            {
+                pages.push('<a href=\"/books?page=' + i + title_query + '\">' + i + '</a>');
+            }
+            if (page < max_page - 4)
+            {
+                if (page != max_page - 5) pages.push('<span>...</span>');
+                pages.push('<a href=\"/books?page=' + max_page + title_query + '\">' + max_page + '</a>');
+            }
+
+            params = {head_title: 'Books', books_page: arr, books_current: 'current', next_page: next_page, prev_page: prev_page, pages: pages, title_value: title_search}
             output.status(200).render('books', params);
         }
         catch (err)

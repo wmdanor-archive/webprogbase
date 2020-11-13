@@ -21,10 +21,13 @@
       <div class="paginator">
         <menu>
           <li class="arrow">{{{prev_page}}}</li>
-          <li><span>{{page}}</span></li>
+          {{#pages}}
+          <li>{{{.}}}</li>
+          {{/pages}}
           <li class="arrow">{{{next_page}}}</li>
         </menu>
       </div>
     </main>
+    {{> footer }}
   </body>
 </html>

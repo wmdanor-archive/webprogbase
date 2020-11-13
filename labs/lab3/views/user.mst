@@ -4,5 +4,6 @@
   <body>
     {{> header }}
     <h1>user</h1>
+    {{> footer }}
   </body>
 </html>
