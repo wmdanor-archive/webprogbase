@@ -6,7 +6,7 @@ body {
     border: solid 1px black;
 }
 
-body, table, form, header, footer {
+body, table, .middle_form, header, footer {
     margin-left: auto;
     margin-right: auto;
 }
@@ -15,7 +15,7 @@ footer {
     text-align: center;
 }
 
-form {
+.middle_form {
     text-align: center;
     margin-bottom: 3px;
 }
@@ -26,7 +26,7 @@ table {
     width: 720px;
 }
 
-table a, footer a {
+table a, footer a, .span_middle a {
     text-decoration: none;
     color: #0000ff;
 }
@@ -78,6 +78,7 @@ td {
 
 .paginator menu {
     list-style-type: disc;
+    padding: 0px;
 }
 
 .paginator li {
@@ -106,4 +107,44 @@ td {
     vertical-align: middle;
     display: inline-block;
     align-self: center;
+}
+
+.bio {
+    margin: 12px;
+    padding: 6px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.user_img {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border: 1px black solid;
+    padding: 2px;
+    max-width: 250px;
+    height: 250px;
+}
+
+img.user_img {
+    display: block;
+}
+
+div.user_img {
+    text-align: center;
+    line-height: 244px;
+}
+
+.span_middle {
+    text-align: center;
+}
+
+.new_book {
+    text-align: left;
+    margin: 3px;
+}
+
+.new_book input {
+    margin: 1px;
 }

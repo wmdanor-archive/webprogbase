@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mustache = require('mustache-express');
+const methodOverride = require('method-override');
 const HttpError = require('./../httpError');
 
 const body_parser = require('body-parser')
@@ -42,11 +43,13 @@ expressSwagger(config);
 // mainRouter.set('view engine', 'html');
 
 const viewsDir = path.join(__dirname, '../views');
-mustache()
+
 mainRouter.engine("mst", mustache(path.join(viewsDir, "partials")));
 mainRouter.set('views', viewsDir);
 mainRouter.set('view engine', 'mst');
 //
+
+mainRouter.use(methodOverride('_method'));
 
 
 //#region api
@@ -59,7 +62,7 @@ mainRouter.put('/api/books/', body_parser.json(), (err, req, res, next) => {
     if (err) throw new HttpError(400, err.message);
     next();
 });
-mainRouter.post('/api/media/', upload.single('image_file'), (res, req, next) => { next(); });
+mainRouter.post('/api/media/', upload.single('media_file'), (req, res, next) => { next(); });
 
 mainRouter.use('/api', apiRouter);
 
@@ -69,6 +72,9 @@ mainRouter.use('/api', apiRouter);
 //#region web documents
 
 mainRouter.use(express.static('public'));
+
+mainRouter.post('/books', upload.single('book_file'));
+mainRouter.post('/books', body_parser.urlencoded({ extended: true }));
 
 mainRouter
     .use('/users', mstUserRouter)
@@ -93,7 +99,7 @@ mainRouter.use((err, req, res, next) => {
     console.log('error caught\n{')
     console.log('    status code: ' + err.status_code + ', message: ' + err.message + '\n}');
 
-    res.status(err.status_code).json({ error: err.message });
+    res.status(err.status_code).render('error', {head_title: 'Error', error: err.status_code + ' | ' + err.message, });
 });
 
 module.exports = mainRouter;

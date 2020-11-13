@@ -96,17 +96,23 @@ module.exports =
             if (user === null) throw new HttpError(404, 'user not found');
             else
             {
+                let role = 'user';
+                if (user.role === 1) role = 'admin';
+                let ava_img = '<img src=\"' + user.ava_url + '" alt=\"ava\" class=\"user_img\">'
+                if (user.ava_url === null) ava_img = '<div class=\"user_img\"><span>No image</span></div>'
+                let bio = 'No biography'
+                if (user.biography != null) bio = user.biography
                 const obj = {
                     id: user.id,
                     login: user.login,
                     fullname: user.fullname,
-                    role: user.role,
+                    role: role,
                     registered_at: user.registered_at,
-                    ava_url: user.ava_url,
+                    ava_url: ava_img,
                     is_enabled: user.is_enabled,
-                    biography: user.biography
+                    biography: bio
                 };
-                output.status(200).json(obj);
+                output.status(200).render('user', {head_title: 'User', users_current: 'current', user: obj});
             }
         }
         catch (err)

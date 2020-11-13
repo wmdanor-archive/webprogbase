@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  {{> head }}
+  <body>
+    {{> header }}
+    <main>
+    <div class="new_book">
+      <form action="/books" method="POST" enctype="multipart/form-data">
+        Title: <input type="text" name="title" required><br>
+        Publishment year: <input type="number" name="publishment_year" required><br>
+        Original language: <input type="text" name="original_language" required><br>
+        Pages number: <input type="number" name="pages" required><br>
+        Adding date: <input type="date" name="added" required><br>
+        E-book file: <input type="file" name="book_file" required><br>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+    </main>
+    {{> footer }}
+  </body>
+</html>

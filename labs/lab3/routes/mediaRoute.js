@@ -12,7 +12,7 @@ mediaRouter
      * @returns {ImageInfo.model} 201 - Image created
      * @returns {Error} 400 - Bad request
      */
-    .post('/', mediaController.addImage)
+    .post('/', mediaController.addMedia)
     /**
      * @route GET /api/media/{id}
      * @group Images - image operations
@@ -21,7 +21,7 @@ mediaRouter
      * @returns {Error} 400 - Bad request
      * @returns {Error} 404 - Image not found
     */
-    .get('/:id', mediaController.getImage);
+    .get('/:id', mediaController.getMedia);
 
 mediaRouter.use((req, res) => {
     throw new HttpError(400, 'command not found');

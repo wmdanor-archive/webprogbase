@@ -10,14 +10,14 @@ class MediaRepository
         this.storage = new JsonStorage(file_path);
     }
 
-    getImageById(image_id)
+    getMediaById(media_id)
     {
         try {
             const items = this.storage.readItems();
             for (const item of items['items']) {
-                if (item['id'] === image_id) {
+                if (item['id'] === media_id) {
                     return new MediaInfo(
-                        image_id,
+                        media_id,
                         item['file_name'],
                         item['file_path']
                     )
@@ -29,19 +29,19 @@ class MediaRepository
         }
     }
 
-    addImage(image_model)
+    addMedia(mdeia_model)
     {
         try {
             let items = this.storage.readItems();
-            image_model.id = this.storage.nextId;
+            mdeia_model.id = this.storage.nextId;
             this.storage.incrementNextId();
             items['items'].push({
-                id: image_model.id,
-                file_name: image_model.file_name,
-                file_path: image_model.file_path
+                id: mdeia_model.id,
+                file_name: mdeia_model.file_name,
+                file_path: mdeia_model.file_path
             });
             this.storage.writeItems(items);
-            return image_model;
+            return mdeia_model;
         } catch (err) {
             throw err;
         }

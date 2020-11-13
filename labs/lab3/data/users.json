@@ -6,8 +6,9 @@
             "fullname": "Admin Admin",
             "role": 1,
             "registered_at": "2020-09-15",
-            "ava_url": "null",
-            "is_enabled": true
+            "ava_url": "http://localhost:55555/api/media/1",
+            "is_enabled": true,
+            "biography": "is admin"
         },
         {
             "id": 4,
@@ -15,8 +16,9 @@
             "fullname": "uu",
             "role": 1,
             "registered_at": "2020-09-26",
-            "ava_url": "url2",
-            "is_enabled": true
+            "ava_url": null,
+            "is_enabled": true,
+            "biography": null
         },
         {
             "id": 5,
@@ -24,8 +26,9 @@
             "fullname": "lul lul",
             "role": 0,
             "registered_at": "2020-09-27",
-            "ava_url": "url22",
-            "is_enabled": true
+            "ava_url": null,
+            "is_enabled": true,
+            "biography": null
         },
         {
             "id": 6,
@@ -34,7 +37,8 @@
             "role": 0,
             "registered_at": "2020-11-10",
             "ava_url": null,
-            "is_enabled": true
+            "is_enabled": true,
+            "biography": null
         },
         {
             "id": 7,
@@ -42,8 +46,9 @@
             "fullname": "uu",
             "role": 0,
             "registered_at": "2020-11-11",
-            "ava_url": "url 1",
-            "is_enabled": true
+            "ava_url": null,
+            "is_enabled": true,
+            "biography": null
         },
         {
             "id": 8,
@@ -51,8 +56,9 @@
             "fullname": "lul lul",
             "role": 0,
             "registered_at": "2020-11-12",
-            "ava_url": "url 2",
-            "is_enabled": true
+            "ava_url": null,
+            "is_enabled": true,
+            "biography": null
         }
     ]
 }

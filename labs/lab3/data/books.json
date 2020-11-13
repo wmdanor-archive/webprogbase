@@ -3,170 +3,200 @@
         {
             "id": 2,
             "title": "gf",
-            "original_language": "re",
+            "original_language": "English",
             "publishment_year": 12,
             "pages": 34,
-            "added": "2020-09-23"
+            "added": "2020-09-23",
+            "file_url": null
         },
         {
             "id": 5,
             "title": "bb",
-            "original_language": "bob",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 29,
-            "added": "2020-09-27"
+            "added": "2020-09-27",
+            "file_url": null
         },
         {
             "id": 6,
             "title": "y",
-            "original_language": "y",
+            "original_language": "English",
             "publishment_year": 56,
             "pages": 78,
-            "added": "2020-09-10"
+            "added": "2020-09-10",
+            "file_url": null
         },
         {
             "id": 7,
             "title": "b1",
-            "original_language": "bb",
+            "original_language": "English",
             "publishment_year": 2000,
             "pages": 78,
-            "added": "2020-10-19"
+            "added": "2020-10-19",
+            "file_url": null
         },
         {
             "id": 8,
             "title": "b2",
-            "original_language": "ll",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 90,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 9,
             "title": "b3",
-            "original_language": "ll",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 90,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 10,
             "title": "b4",
-            "original_language": "ll",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 90,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 11,
             "title": "b5",
-            "original_language": "ll",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 90,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 12,
             "title": "b6",
-            "original_language": "ll",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 90,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 13,
             "title": "b7",
-            "original_language": "pp",
+            "original_language": "English",
             "publishment_year": 2000,
             "pages": 88,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 14,
             "title": "b8",
-            "original_language": "ll",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 90,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 15,
             "title": "b9",
-            "original_language": "ll",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 90,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 16,
             "title": "b10",
-            "original_language": "ll",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 90,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 18,
             "title": "b12",
-            "original_language": "ll",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 90,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 19,
             "title": "b13",
-            "original_language": "ll",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 90,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 20,
             "title": "b14",
-            "original_language": "ll",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 90,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 21,
             "title": "b15",
-            "original_language": "ll",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 90,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 22,
             "title": "b16",
-            "original_language": "ll",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 90,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 23,
             "title": "b17",
-            "original_language": "ll",
+            "original_language": "English",
             "publishment_year": 1999,
             "pages": 90,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 24,
             "title": "y1",
-            "original_language": "tt",
+            "original_language": "English",
             "publishment_year": 2000,
             "pages": 80,
-            "added": "2020-10-20"
+            "added": "2020-10-20",
+            "file_url": null
         },
         {
             "id": 25,
             "title": "b66",
-            "original_language": "ghjk",
+            "original_language": "English",
             "publishment_year": 2009,
             "pages": 90,
-            "added": "2020-10-23"
+            "added": "2020-10-23",
+            "file_url": null
+        },
+        {
+            "id": 26,
+            "title": "test book 1",
+            "original_language": "Lang 1",
+            "publishment_year": 1999,
+            "pages": 20,
+            "added": "2020-11-13",
+            "file_url": "http://localhost:55555/api/media/6"
         }
     ]
 }

@@ -6,11 +6,11 @@ const HttpError = require('./../httpError');
 
 module.exports = 
 {
-    addImage(input, output)
+    addMedia(input, output)
     {
         try {
-            const img = mediaRepository.addImage(new MediaInfo(0, input.file.originalname, input.file.path));
-            output.status(201).json({id: img.id, file_name: img.file_name});
+            const media = mediaRepository.addMedia(new MediaInfo(0, input.file.originalname, input.file.path));
+            output.status(201).json({id: media.id, file_name: media.file_name});
         }
         catch (err)
         {
@@ -19,7 +19,7 @@ module.exports =
         }
     },
 
-    getImage(input, output)
+    getMedia(input, output)
     {
         try {
             const id_str = input.params.id;
@@ -28,9 +28,9 @@ module.exports =
             if (!Number.isInteger(id)) throw new HttpError(400, 'id is not an integer');
             if (id < 1) throw new HttpError(400, 'invalid id value (id < 1)');
             
-            const image = mediaRepository.getImageById(id);
-            if (image === null) throw new HttpError(404, 'image not found');
-            else output.status(200).download(image.file_path, image.file_name);
+            const media = mediaRepository.getMediaById(id);
+            if (media === null) throw new HttpError(404, 'media not found');
+            else output.status(200).download(media.file_path, media.file_name);
         }
         catch (err)
         {

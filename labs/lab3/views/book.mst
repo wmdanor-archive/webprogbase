@@ -3,7 +3,21 @@
   {{> head }}
   <body>
     {{> header }}
-    <h1>book</h1>
+    <main>
+      {{#book}}
+      <span class="span_middle">
+        <h2>{{title}}</h2>
+        <h4>{{publishment_year}}</h4>
+        <p>Written on {{original_language}}</p>
+        <p>Has {{pages}} pages</p>
+        <p>Added here {{added}}</p>
+        <p><a href="{{file_url}}">Download book</a></p>
+      </span>
+      <form action="/books/{{id}}?_method=DELETE" method = "POST" class="middle_form">
+        <input type="submit" name="delete" value="Delete book" onclick="return confirm('Confirm, please.');">
+      </form>
+      {{/book}}
+    </main>
     {{> footer }}
   </body>
 </html>

@@ -3,13 +3,18 @@
   {{> head }}
   <body>
     {{> header }}
-    <div style="margin: 8px">
-        <img src="/images/bruh.jpg" alt="me" align="middle" height="100px" style="margin-right:8px">
-        <span class="span_right">
-            <h2>Me after typing 3k rows in one day</h2>
-            <p style="font-size: 10px">Based on true story</p>
-        </span>
-    </div>
+    <main>
+      <div style="margin: 8px">
+          <img src="/images/bruh.jpg" alt="me" align="middle" height="100px" style="margin-right:8px">
+          <span class="span_right">
+              <h2>Me after typing 3k rows in one day</h2>
+              <p style="font-size: 10px">Based on true story</p>
+          </span>
+      </div>
+    </main>
+    <span style="margin: 8px">
+      This website was made after closing 4 deadlines at the cost of more than 12-hour work a day for a week.
+    </span>
     {{> footer }}
   </body>
 </html>

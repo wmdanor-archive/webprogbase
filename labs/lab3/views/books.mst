@@ -4,7 +4,7 @@
   <body>
     {{> header }}
     <main>
-      <form action="/books" method="GET">
+      <form action="/books" method="GET" class="middle_form">
         <input type="text" name="title" style="width: 360px" value="{{title_value}}"><input type="submit" value="Search">
       </form>
       <table>
@@ -31,6 +31,9 @@
           <li class="arrow">{{{next_page}}}</li>
         </menu>
       </div>
+      <form action="/books/new" method="GET" class="middle_form">
+        <input type="submit" value="Create new book">
+      </form>
     </main>
     {{> footer }}
   </body>

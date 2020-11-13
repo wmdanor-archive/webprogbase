@@ -3,7 +3,18 @@
   {{> head }}
   <body>
     {{> header }}
-    <h1>user</h1>
+    <main>
+      {{#user}}
+      {{{ava_url}}}
+      <span class="span_middle">
+        <h2>{{fullname}}</h2>
+        <h4>{{login}}</h4>
+        <h4>With us since {{registered_at}}</h4>
+        <h4>Role: {{role}}</h4>
+      </span>
+      <div class="bio">{{biography}}</div>
+      {{/user}}
+    </main>
     {{> footer }}
   </body>
 </html>

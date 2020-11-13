@@ -1,12 +1,15 @@
 const BookRepository = require('./../repositories/bookRepository');
+const MediaRepository = require('./../repositories/mediaRepository');
 const Book = require('./../models/book');
+const MediaInfo = require('./../models/media');
 
 const bookRepository = new BookRepository('./data/books');
+const mediaRepository = new MediaRepository('./data/media');
 const HttpError = require('./../httpError');
 
 const moment = require('moment');
 
-const page_size = 1;
+const page_size = 4;
 
 function bookToObject(book)
 {
@@ -16,7 +19,8 @@ function bookToObject(book)
         original_language: book.original_language,
         publishment_year: book.publishment_year,
         pages: book.pages,
-        added: book.added
+        added: book.added,
+        file_url: book.file_url
     };
 }
 
@@ -32,20 +36,21 @@ function bookParser(obj, id_check = false)
             else if (id < 1) { throw new HttpError(400, 'invalid id value (id < 1)'); }
         }
         else { id = 0; }
-
-        if (typeof obj['title'] != 'string' || typeof obj['original_language'] != 'string' ||
-            typeof obj['added'] != 'string' || !Number.isInteger(obj['publishment_year']) ||
-            !Number.isInteger(obj['pages'])) throw new HttpError(400, 'invalid field types');
-        else if (!moment(obj['added'], moment.ISO_8601, true).isValid()) throw new HttpError(400, 'invalid date format');
+        
+        if (!moment(obj['added'], moment.ISO_8601, true).isValid()) throw new HttpError(400, 'invalid date format');
         else 
         {
+            year = parseInt(obj.publishment_year)
+            pages = parseInt(obj.pages)
+            if (isNaN(year) || isNaN(pages)) throw new HttpError(400, 'Invalid data format');
             return new Book(
                 id,
                 obj['title'],
                 obj['original_language'],
-                obj['publishment_year'],
-                obj['pages'],
-                obj['added']
+                year,
+                pages,
+                obj['added'],
+                obj['file_url']
             );
         }
     }
@@ -152,7 +157,7 @@ module.exports =
             else
             {
                 const obj = bookToObject(book);
-                output.status(200).json(obj);
+                output.status(200).render('book', {head_title: 'Books', books_current: 'current', book: obj});
             }
         }
         catch (err)
@@ -165,10 +170,14 @@ module.exports =
     addBook(input, output)
     {
         try {
-            const book_model = bookParser(input.body);
+            const media = mediaRepository.addMedia(new MediaInfo(0, input.file.originalname, input.file.path));
+            let body = input.body;
+            body.file_url = 'http://localhost:55555/api/media/' + media.id;
+            const book_model = bookParser(body);
             const book = bookRepository.addBook(book_model);
             const obj = bookToObject(book);
-            output.status(201).json(obj);
+            output.status(303).redirect('http://localhost:55555/books/' + obj.id)
+
         }
         catch (err)
         {
@@ -190,8 +199,7 @@ module.exports =
             if (book === null) throw new HttpError(404, 'book not found');
             else
             {
-                const obj = bookToObject(book);
-                output.status(200).json(obj);
+                output.status(303).redirect('http://localhost:55555/books')
             }
         }
         catch (err)
