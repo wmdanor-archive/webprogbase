@@ -20,11 +20,14 @@
       </table>
       <div class="paginator">
         <menu>
-          <li class="arrow">{{{prev_page}}}</li>
-          {{#pages}}
-          <li>{{{.}}}</li>
-          {{/pages}}
-          <li class="arrow">{{{next_page}}}</li>
+          {{#paginator_pages}}
+            {{#element_page}}
+              <li><a href="users?page={{element_page}}">{{element_text}}</a></li>
+            {{/element_page}}
+            {{^element_page}}
+              <li><span>{{element_text}}</span></li>
+            {{/element_page}}
+          {{/paginator_pages}}
         </menu>
       </div>
     </main>

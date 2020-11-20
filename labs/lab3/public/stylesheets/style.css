@@ -109,6 +109,12 @@ td {
     align-self: center;
 }
 
+.not_active {
+    pointer-events: none;
+    cursor: default;
+    color: black;
+  }
+
 .bio {
     margin: 12px;
     padding: 6px;

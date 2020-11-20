@@ -5,7 +5,12 @@
     {{> header }}
     <main>
       {{#user}}
-      {{{ava_url}}}
+      {{#ava_url}}
+        <img src={{ava_url}} alt="ava" class="user_img">
+      {{/ava_url}}
+      {{^ava_url}}
+        <div class="user_img"><span>No image</span></div>
+      {{/ava_url}}
       <span class="span_middle">
         <h2>{{fullname}}</h2>
         <h4>{{login}}</h4>

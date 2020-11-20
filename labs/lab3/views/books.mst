@@ -5,7 +5,7 @@
     {{> header }}
     <main>
       <form action="/books" method="GET" class="middle_form">
-        <input type="text" name="title" style="width: 360px" value="{{title_value}}"><input type="submit" value="Search">
+        <input type="text" name="title" style="width: 360px" value="{{title_query}}"><input type="submit" value="Search">
       </form>
       <table>
         <tr>
@@ -20,16 +20,25 @@
             <td>{{added}}</td>
         </tr>
         {{/books_page}}
-        {{{null_result}}}
+        {{^books_page}}
+          <tr><td colspan=3 style="text-align: center;">Nobody here but us chickens!</td></tr>
+        {{/books_page}}
       </table>
       <div class="paginator">
         <menu>
-          <li class="arrow">{{{prev_page}}}</li>
-          {{#pages}}
-          <li>{{{.}}}</li>
-          {{/pages}}
-          <li class="arrow">{{{next_page}}}</li>
-        </menu>
+          {{#paginator_pages}}
+            {{#element_page}}
+              {{#title_query}}
+                <li><a href="books?page={{element_page}}&title={{title_query}}">{{element_text}}</a></li>
+              {{/title_query}}
+              {{^title_query}}
+                <li><a href="books?page={{element_page}}">{{element_text}}</a></li>
+              {{/title_query}}
+            {{/element_page}}
+            {{^element_page}}
+              <li><span>{{element_text}}</span></li>
+            {{/element_page}}
+          {{/paginator_pages}}
       </div>
       <form action="/books/new" method="GET" class="middle_form">
         <input type="submit" value="Create new book">

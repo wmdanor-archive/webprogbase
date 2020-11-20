@@ -90,9 +90,12 @@ module.exports =
             const offset = page_size * (page - 1);
             if (offset === 0 && size === 0)
             {
+                const paginator_pages = []
+                paginator_pages.push({element_text: '<'})
+                paginator_pages.push({element_text: '>'})
+
                 output.status(200).render('books', {head_title: 'Books', books_page: null, books_current: 'current',
-                    next_page: '<span>&gt;</span>', prev_page: '<span>&lt;</span>', page: null, title_value: title_search,
-                    null_result: '<tr><td colspan=3 style=\"text-align: center;\">Nobody here but us chickens!</td></tr>'});
+                    paginator_pages: paginator_pages, title_query: title_search});
                 return;
             }
             if (offset >= size) throw new HttpError(400, 'offset is bigger than books number (page size is 8)');
@@ -104,36 +107,41 @@ module.exports =
             {
                 arr.push(bookToObject(book));
             }
-            let prev_page = '<span>&lt;</span>';
-            let next_page = '<span>&gt;</span>';
+
+            const paginator_pages = []
+
             let title_query = ''; 
             if (!(title_search === undefined)) title_query = '&title=' + title_search;
-            if (page != 1) prev_page = '<a href=\"/books?page=' + (page-1) + title_query + '\">&lt;</a>'
-            if (offset + page_size < size) next_page = '<a href=\"/books?page=' + (page+1) + title_query + '\">&gt;</a>'
+
+            if (page === 1) paginator_pages.push({element_text: '<'})
+            else paginator_pages.push({element_page: page-1, element_text: '<', title_query: title_search})
 
             let pages = []
 
             if (page > 5)
             {
-                pages.push('<a href=\"/books?page=1' + title_query + '\">1</a>');
-                if (page != 6) pages.push('<span>...</span>');
+                paginator_pages.push({element_page: 1, element_text: 1, title_query: title_search})
+                if (page != 6) paginator_pages.push({element_text: '...'})
             }
             for (i = Math.max(page-4, 1); i < page; i++)
             {
-                pages.push('<a href=\"/books?page=' + i + title_query + '\">' + i + '</a>');
+                paginator_pages.push({element_page: i, element_text: i, title_query: title_search})
             }
-            pages.push('<span>' + page + '</span>');
+            paginator_pages.push({element_text: page})
             for (i = page+1; i <= Math.min(page+4, max_page); i++)
             {
-                pages.push('<a href=\"/books?page=' + i + title_query + '\">' + i + '</a>');
+                paginator_pages.push({element_page: i, element_text: i, title_query: title_search})
             }
             if (page < max_page - 4)
             {
-                if (page != max_page - 5) pages.push('<span>...</span>');
-                pages.push('<a href=\"/books?page=' + max_page + title_query + '\">' + max_page + '</a>');
+                if (page != max_page - 5) paginator_pages.push({element_text: '...'})
+                paginator_pages.push({element_page: max_page, element_text: max_page, title_query: title_search})
             }
 
-            params = {head_title: 'Books', books_page: arr, books_current: 'current', next_page: next_page, prev_page: prev_page, pages: pages, title_value: title_search}
+            if (offset + page_size < size) paginator_pages.push({element_page: page+1, element_text: '>', title_query: title_search})
+            else paginator_pages.push({element_text: '>'})
+
+            params = {head_title: 'Books', books_page: arr, books_current: 'current', paginator_pages: paginator_pages, title_query: title_search}
             output.status(200).render('books', params);
         }
         catch (err)

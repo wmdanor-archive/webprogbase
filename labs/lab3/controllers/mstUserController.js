@@ -29,7 +29,12 @@ module.exports =
             const offset = page_size * (page - 1);
             if (offset === 0 && size === 0)
             {
-                output.status(200).json([]);
+                const paginator_pages = []
+                paginator_pages.push({element_text: '<'})
+                paginator_pages.push({element_text: '>'})
+
+                output.status(200).render('books', {head_title: 'Users', books_page: null, users_current: 'current',
+                    paginator_pages: paginator_pages});
                 return;
             }
             if (offset >= size) throw new HttpError(400, 'offset is bigger than users number (page size is 8)');
@@ -46,34 +51,36 @@ module.exports =
                     registered_at: user.registered_at
                 });
             }
-            let prev_page = '<span>&lt;</span>';
-            let next_page = '<span>&gt;</span>';
-            if (page != 1) prev_page = '<a href=\"/users?page=' + (page-1) + '\">&lt;</a>'
-            if (offset + page_size < size) next_page = '<a href=\"/users?page=' + (page+1) + '\">&gt;</a>'
 
-            let pages = []
+            const paginator_pages = []
+
+            if (page === 1) paginator_pages.push({element_text: '<'})
+            else paginator_pages.push({element_page: page-1, element_text: '<'})
 
             if (page > 5)
             {
-                pages.push('<a href=\"/users?page=1\">1</a>');
-                if (page != 6) pages.push('<span>...</span>');
+                paginator_pages.push({element_page: 1, element_text: 1})
+                if (page != 6) paginator_pages.push({element_text: '...'})
             }
             for (i = Math.max(page-4, 1); i < page; i++)
             {
-                pages.push('<a href=\"/users?page=' + i + '\">' + i + '</a>');
+                paginator_pages.push({element_page: i, element_text: i})
             }
-            pages.push('<span>' + page + '</span>');
+            paginator_pages.push({element_text: page})
             for (i = page+1; i <= Math.min(page+4, max_page); i++)
             {
-                pages.push('<a href=\"/users?page=' + i + '\">' + i + '</a>');
+                paginator_pages.push({element_page: i, element_text: i})
             }
             if (page < max_page - 4)
             {
-                if (page != max_page - 5) pages.push('<span>...</span>');
-                pages.push('<a href=\"/users?page=' + max_page + '\">' + max_page + '</a>');
+                if (page != max_page - 5) paginator_pages.push({element_text: '...'})
+                paginator_pages.push({element_page: max_page, element_text: max_page})
             }
 
-            params = {head_title: 'Users', users_page: arr, users_current: 'current', next_page: next_page, prev_page: prev_page, pages: pages}
+            if (offset + page_size < size) paginator_pages.push({element_page: page+1, element_text: '>'})
+            else paginator_pages.push({element_text: '>'})
+
+            params = {head_title: 'Users', users_page: arr, users_current: 'current', paginator_pages: paginator_pages}
             output.status(200).render('users', params);
         }
         catch (err)
@@ -98,8 +105,6 @@ module.exports =
             {
                 let role = 'user';
                 if (user.role === 1) role = 'admin';
-                let ava_img = '<img src=\"' + user.ava_url + '" alt=\"ava\" class=\"user_img\">'
-                if (user.ava_url === null) ava_img = '<div class=\"user_img\"><span>No image</span></div>'
                 let bio = 'No biography'
                 if (user.biography != null) bio = user.biography
                 const obj = {
@@ -108,7 +113,7 @@ module.exports =
                     fullname: user.fullname,
                     role: role,
                     registered_at: user.registered_at,
-                    ava_url: ava_img,
+                    ava_url: user.ava_url,
                     is_enabled: user.is_enabled,
                     biography: bio
                 };

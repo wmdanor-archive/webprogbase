@@ -19,6 +19,11 @@
             "id": 7,
             "file_name": "photo_2020-04-06_02-31-17.jpg",
             "file_path": "data\\images\\bdd038d4bccb9c15b5ab03b1a2d877ac"
+        },
+        {
+            "id": 8,
+            "file_name": "unnamed.jpg",
+            "file_path": "data\\images\\95cbce9decdeb3d60829f945ad9bd418"
         }
     ]
 }
