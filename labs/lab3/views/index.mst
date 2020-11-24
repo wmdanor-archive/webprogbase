@@ -12,10 +12,10 @@
         Also it is possible to add and delete books.
       </p>
       <p> I wil add some random images next:</p>
-      <img style="max-width: 360px" src="http://localhost:55555/images/rand_img_1.jpg"><br>
-      <img style="max-width: 360px" src="http://localhost:55555/images/rand_img_2.jpg"><br>
-      <img style="max-width: 360px" src="http://localhost:55555/images/rand_img_3.jpg"><br>
-      <img style="max-width: 360px" src="http://localhost:55555/images/rand_img_4.jpg"><br>
+      <img style="max-width: 360px" src="/images/rand_img_1.jpg"><br>
+      <img style="max-width: 360px" src="/images/rand_img_2.jpg"><br>
+      <img style="max-width: 360px" src="/images/rand_img_3.jpg"><br>
+      <img style="max-width: 360px" src="/images/rand_img_4.jpg"><br>
     </div>
     <main>
     {{> footer }}
