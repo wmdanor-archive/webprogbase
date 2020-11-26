@@ -1,5 +1,7 @@
 data/images/*
 
+package-lock.json
+
 # Logs
 logs
 *.log
