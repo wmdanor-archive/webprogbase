@@ -197,6 +197,15 @@
             "pages": 20,
             "added": "2020-11-13",
             "file_url": "http://localhost:55555/api/media/6"
+        },
+        {
+            "id": 29,
+            "title": "t1",
+            "original_language": "l1",
+            "publishment_year": 2020,
+            "pages": 20,
+            "added": "2020-11-26",
+            "file_url": "http://localhost:55555/api/media/9"
         }
     ]
 }

@@ -9,7 +9,7 @@ const HttpError = require('./../httpError');
 
 const moment = require('moment');
 
-const page_size = 1;
+const page_size = 4;
 
 function bookToObject(book)
 {
